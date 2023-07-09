@@ -56,11 +56,17 @@ class Action:
     def description(self):
         return self.content["desc"]
 
+    def is_end(self):
+        return self.choices == False
+
     def __init__(self, content):
         self.content = content
         self.choices = []
-        for choice in self.content["choices"]:
-            self.choices.append(Choice(choice))
+        if 'choices' not in self.content.keys():
+            self.choices = 0
+        else:
+            for choice in self.content["choices"]:
+                self.choices.append(Choice(choice))
 
     def find_choice_by_id(self, key):
         return self.choices[key]

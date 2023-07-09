@@ -27,6 +27,9 @@ class Game:
     def handle_action(self, action_id):
         action = self.story.find_action_by_id(action_id)
         util.print_action(action)
+        if action.is_end():
+            return -1
+
         choice = util.input_choice(action)
 
         if not choice:
@@ -61,6 +64,9 @@ class Game:
         next_action = self.story.start
         while next_action:
             next_action = self.handle_action(next_action)
+            if next_action == -1:
+                print("The end")
+                break
 
         print("Thank you for playing with me, bye!")
 

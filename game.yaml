@@ -175,7 +175,7 @@ game:
             next: "good_ending"
 
       - action: "bad_ending"
-        name: Good Ending
+        name: Bad Ending
         desc: The sorceress teleports to you a wasteland. In the wasteland you meet one of the Spirits. They greet you
           with deep sadness. 
           
@@ -184,7 +184,7 @@ game:
           your heart. When, and not if. We see your value, we want you to shine!'
 
       - action: "good_ending"
-        name: Bad ending
+        name: Good ending
         desc: You pledge to protect the sorceress. During the years you fell with love with each other, and you make 
           an oath to keep protecting the realm as wife and husband. After many years you two visit the village where 
           they greet you as a true hero and they celebrate your wife as the Protector of the Realm. At midnight, one of

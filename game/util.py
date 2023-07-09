@@ -42,7 +42,7 @@ def input_choice(action):
         print("  I) View inventory")
         print("  Q) Quit game")
 
-        key = input("\n What do you do?")
+        key = input("\n What do you do? ")
         if not validate_input(key):
             print("\n ** This is not possible!")
             continue
