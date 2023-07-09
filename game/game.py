@@ -10,13 +10,15 @@ class Game:
         util.print_action(action)
         choice = util.input_choice(action)
 
-        return choice.next
+        return choice.next if choice else None
 
     def play(self):
         self.prologue()
         next_action = self.story.start
         while next_action:
             next_action = self.handle_action(next_action)
+
+        print("Thank you for playing with me, bye!")
 
     def prologue(self):
         print(f'Welcome to "{self.story.title}"\n')
