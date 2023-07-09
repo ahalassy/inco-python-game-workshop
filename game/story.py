@@ -25,6 +25,10 @@ class Choice:
     def items(self):
         return self.content["items"] if 'items' in self.content.keys() else []
 
+    @property
+    def hooks(self):
+        return self.content["hooks"] if 'hooks' in self.content.keys() else []
+
     def __init__(self, content):
         self.content = content
 

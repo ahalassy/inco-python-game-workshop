@@ -5,6 +5,7 @@ class Game:
     def __init__(self, story):
         self.story = story
         self.inventory = []
+        self.reputation = 0
 
     def handle_action(self, action_id):
         action = self.story.find_action_by_id(action_id)
@@ -32,6 +33,11 @@ class Game:
             self.inventory.append(item)
             print(f"A(n) {item} added to your backpack.")
 
+        # Handle hooks:
+        for hook in choice.hooks:
+            method = getattr(self, hook)
+            method()
+
 
     def play(self):
         self.prologue()
@@ -45,5 +51,12 @@ class Game:
         print(f'Welcome to "{self.story.title}"\n')
         util.print_text(self.story.prologue)
         print("\n")
+
+    # Hooks:
+    def increase_reputation(self):
+        self.reputation += 1
+
+    def decrease_reputation(self):
+        self.reputation += 1
 
 
