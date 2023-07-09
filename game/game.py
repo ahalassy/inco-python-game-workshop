@@ -8,6 +8,7 @@ class Game:
         self.story = story
         self.inventory = []
         self.reputation = 0
+        self.strength = 0
 
     def handle_fight(self, choice):
         fight = choice.fight_results
@@ -75,4 +76,7 @@ class Game:
     def decrease_reputation(self):
         self.reputation += 1
 
+    def increase_strength(self):
+        self.strength += 1
+        print(f"Your strength increased to {self.strength}.")
 
