@@ -16,6 +16,10 @@ class Choice:
     def next(self):
         return self.content["next"]
 
+    @property
+    def items(self):
+        return self.content["items"] if 'items' in self.content.keys() else []
+
     def __init__(self, content):
         self.content = content
 
