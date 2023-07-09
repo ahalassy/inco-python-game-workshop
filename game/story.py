@@ -18,6 +18,15 @@ class Choice:
         return self.content["next"]
 
     @property
+    def fight_results(self):
+        action = self.content['next']
+        if type(action) is not dict:
+            return False
+
+        results = action if any(s in action.keys() for s in ('win', 'loss')) else None
+        return (results["win"], results["loss"]) if results else False
+
+    @property
     def response(self):
         return self.content["response"] if 'response' in self.content.keys() else None
 

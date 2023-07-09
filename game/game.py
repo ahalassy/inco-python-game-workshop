@@ -1,3 +1,5 @@
+import random
+
 from game import util
 
 
@@ -6,6 +8,20 @@ class Game:
         self.story = story
         self.inventory = []
         self.reputation = 0
+
+    def handle_fight(self, choice):
+        fight = choice.fight_results
+        if not fight:
+            return None
+
+        (win, loss) = fight
+        outcome = random.randint(1, 6)
+        if outcome > 3:
+            print("You won the fight, you lucky man!")
+            return win
+        else:
+            print("You lost the fight, and barely escaped.")
+            return loss
 
     def handle_action(self, action_id):
         action = self.story.find_action_by_id(action_id)
@@ -21,7 +37,8 @@ class Game:
 
         self.handle_choice(choice)
 
-        return choice.next
+        fight_outcome = self.handle_fight(choice)
+        return fight_outcome if fight_outcome else choice.next
 
     def handle_choice(self, choice):
         # Handle response if any:
@@ -37,7 +54,6 @@ class Game:
         for hook in choice.hooks:
             method = getattr(self, hook)
             method()
-
 
     def play(self):
         self.prologue()
