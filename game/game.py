@@ -23,10 +23,15 @@ class Game:
         return choice.next
 
     def handle_choice(self, choice):
+        # Handle response if any:
+        if choice.response:
+            util.print_text(choice.response)
+
         # Add items if any:
         for item in choice.items:
             self.inventory.append(item)
             print(f"A(n) {item} added to your backpack.")
+
 
     def play(self):
         self.prologue()

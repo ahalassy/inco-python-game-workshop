@@ -6,6 +6,7 @@ def load_story(filename):
         content = yaml.safe_load(file)
         return Story(content)
 
+
 class Choice:
 
     @property
@@ -15,6 +16,10 @@ class Choice:
     @property
     def next(self):
         return self.content["next"]
+
+    @property
+    def response(self):
+        return self.content["response"] if 'response' in self.content.keys() else None
 
     @property
     def items(self):
