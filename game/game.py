@@ -2,7 +2,6 @@ import random
 
 from game import util
 
-
 class Game:
     def __init__(self, story):
         self.story = story
@@ -30,7 +29,8 @@ class Game:
         if action.is_end():
             return -1
 
-        choice = util.input_choice(action)
+        choice = util.input_choice(self, action)
+        print()
 
         if not choice:
             return None
@@ -40,6 +40,7 @@ class Game:
             return action_id
 
         self.handle_choice(choice)
+        print()
 
         fight_outcome = self.handle_fight(choice)
         return fight_outcome if fight_outcome else choice.next
@@ -59,13 +60,32 @@ class Game:
             method = getattr(self, hook)
             method()
 
+    def is_choice_available(self, choice):
+        if not choice.has_condition:
+            return True
+
+        for condition in choice.conditions:
+            method = getattr(self, condition)
+            if not method():
+                return False
+
+        return True
+
+    def get_choices_for(self, action):
+        result = []
+        for choice in action.choices:
+            if self.is_choice_available(choice):
+                result.append(choice)
+
+        return result
+
     def play(self):
         self.prologue()
         next_action = self.story.start
         while next_action:
             next_action = self.handle_action(next_action)
             if next_action == -1:
-                print("The end")
+                print("-- The End --\n\n")
                 break
 
         print("Thank you for playing with me, bye!")
@@ -76,13 +96,18 @@ class Game:
         print("\n")
 
     # Hooks:
+    def decrease_reputation(self):
+        self.reputation -= 1
+        print(f"Your reputation decreased to {self.reputation}.")
+
     def increase_reputation(self):
         self.reputation += 1
-
-    def decrease_reputation(self):
-        self.reputation += 1
+        print(f"Your reputation increased to {self.reputation}.")
 
     def increase_strength(self):
         self.strength += 1
         print(f"Your strength increased to {self.strength}.")
+
+    def is_reputation_positive(self):
+        return self.reputation > 0
 

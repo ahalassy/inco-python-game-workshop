@@ -9,14 +9,14 @@ def print_text(text):
 
 
 def print_action(action):
-    print(f"{action.name}\n")
+    print(f"{action.name}:")
     print_text(action.description)
     print()
 
 
 def print_inventory(game):
     if len(game.inventory) == 0:
-        print("Your backpack is empty.")
+        print("Your backpack is empty.\n")
         return
 
     print("You have the following things in your backpack:")
@@ -30,11 +30,12 @@ def validate_input(key):
     return pattern.match(key)
 
 
-def input_choice(action):
+def input_choice(game, action):
+    choices = game.get_choices_for(action)
     while True:
         idx = 0
-        while idx < len(action.choices):
-            choice = action.choices[idx]
+        while idx < len(choices):
+            choice = choices[idx]
             idx += 1
             print(f'  {idx}) {choice.text}')
 
@@ -54,8 +55,8 @@ def input_choice(action):
             return -2
 
         choice = int(key) - 1
-        if choice < 0 or choice >= len(action.choices):
+        if choice < 0 or choice >= len(choices):
             print("\n ** This is not possible!")
             continue
 
-        return action.find_choice_by_id(choice)
+        return choices[choice]

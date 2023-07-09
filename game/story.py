@@ -10,6 +10,14 @@ def load_story(filename):
 class Choice:
 
     @property
+    def has_condition(self):
+        return 'when' in self.content.keys()
+
+    @property
+    def conditions(self):
+        return self.content["when"] if self.has_condition else None
+
+    @property
     def text(self):
         return self.content["choice"]
 
@@ -67,9 +75,6 @@ class Action:
         else:
             for choice in self.content["choices"]:
                 self.choices.append(Choice(choice))
-
-    def find_choice_by_id(self, key):
-        return self.choices[key]
 
 
 class Story:
